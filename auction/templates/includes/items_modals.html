@@ -1,0 +1,95 @@
+<style>
+  .modal-content {
+    background-color: #212121
+  }
+
+  .modal-body > img {
+      width:100%;
+  }
+
+</style>
+
+<!-- More Info -->
+<div class="modal fade" id="Modal-MoreInfo-{{ item.id }}"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel">
+          {{ item.name }}
+        </h5>
+      </div>
+      <div class="modal-body">
+        {{ item.description }}
+        <img src="static/images/{{ item.image }}" alt="">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"
+                data-dismiss="modal">Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bid Confirm -->
+<div class="modal fade" id="Modal-BidConfirm-{{ item.id }}"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel">
+          <!-- -->
+          {{ item.name }}
+        </h5>
+      </div>
+      <div class="modal-body">
+        <form method="POST">
+            {{ bid_form.hidden_tag() }}
+          <h4 class="text-center">Are you sure you want to bid? Minimum next bid: {{ item.minimum_next_bid() }}$</h4>
+            <input id="bid_item" name="bid_item" type="hidden" value="{{ item.name }}">
+          {{ bid_form.submit(class="btn btn-outline btn-success btn-block") }}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"
+                data-dismiss="modal">Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Custom Bid Confirm -->
+<div class="modal fade" id="Modal-CustomBidConfirm-{{ item.id }}"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel">
+          <!-- -->
+          {{ item.name }}
+        </h5>
+      </div>
+      <div class="modal-body">
+        <form method="POST">
+            {{ custom_bid_form.hidden_tag() }}
+          <h4 class="text-center">Enter custom bid above {{ item.minimum_next_bid() }}$: </h4>
+             {{ custom_bid_form.custom_bid(class="form-control",placeholder="Enter bid") }}
+
+          <br>
+          <input id="custom_bid_item" name="custom_bid_item" type="hidden" value="{{ item.name }}">
+            {{ custom_bid_form.submit(class="btn btn-outline btn-danger btn-block") }}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"
+                data-dismiss="modal">Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+ {% block title %}
+    Create Item Page
+ {% endblock %}
+
+
+
+ {% block content %}
+<body class="text-center">
+<div class="container">
+<form method="POST" class="form-register" style="color:white;" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <br>
+    <h1 class="page_title">
+        Create your Item
+    </h1>
+    <br>
+    {{ form.name.label() }}
+    {{ form.name(class="form-control",placeholder="Item Name")}}
+
+    {{ form.description.label() }}
+    {{ form.description(class="form-control",placeholder="Item description")}}
+
+    {{ form.current_bid.label() }}
+    {{ form.current_bid(class="form-control",placeholder="Starting bid")}}
+
+    {{ form.duration.label() }}
+    {{ form.duration(class="form-control",placeholder="Auction duration")}}
+
+    {{ form.photo.label() }}
+    {{ form.photo(class="form-control-file")}}
+
+    <br>
+    {{ form.submit(class="btn btn-lg btn-block btn-primary", style="background-color:#2272FF;border-color: #2272FF") }}
+</form>
+    </div>
+</body>
+ {% endblock %}

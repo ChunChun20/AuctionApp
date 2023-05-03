@@ -1,0 +1,48 @@
+.success {
+    color: #fff;
+    background-color: #00cc00;
+    border-color: #00cc00;
+}
+
+
+.fail {
+    color: #fff;
+    background-color: #D2042D;
+    border-color: #D2042D;
+}
+
+.info {
+    color: #fff;
+    background-color: #45b7fe;
+    border-color: #45b7fe;
+
+    }
+
+.page_title {
+    color: #45b7fe;
+    font-weight:bold;
+}
+
+.btn-success {
+    color:black;
+    background-color:#00cc00 !important;
+    border-color: #00cc00 !important;
+}
+
+.btn-danger {
+    color:black;
+    background-color: #ece75f !important;
+    border-color:  #ece75f !important;
+}
+
+.btn-info {
+    color:black;
+    background-color: #45b7fe !important;
+    border-color:  #45b7fe !important;
+}
+
+.table_head {
+    color: #00cc00;
+    background-color:#404040;
+
+}
