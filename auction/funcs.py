@@ -42,8 +42,10 @@ def check_auctions():
                     db.session.commit()
 
                 elif current_date1 > item.end and item.bidder_id != None:
+                    prev_owner = User.query.filter_by(id=item.seller_id).first()
                     new_owner = User.query.filter_by(username=item.bidder_id).first()
                     item.owner = new_owner.id
+                    prev_owner.budget += item.current_bid
                     db.session.commit()
 
         time.sleep(2)

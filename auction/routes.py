@@ -111,10 +111,11 @@ def create_page():
         create_item = Item(name=form.name.data,
                            description=form.description.data,
                            start=current_time.strftime("%m/%d/%Y, %H:%M:%S"),
-                           end=(current_time + timedelta(days=form.duration.data)).strftime("%m/%d/%Y, %H:%M:%S"),
+                           end=(current_time + timedelta(minutes=form.duration.data)).strftime("%m/%d/%Y, %H:%M:%S"),
                            current_bid=form.current_bid.data,
                            step=1.10,
-                           image=image_file
+                           image=image_file,
+                           seller_id = current_user.id
                            )
 
 
