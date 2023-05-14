@@ -43,7 +43,7 @@
         <h5 class="modal-title" id="{{ item.id }}">
           <!-- -->
           {{ item.name }}
-          {{ item.current_bid }}
+
         </h5>
       </div>
       <div class="modal-body">
@@ -108,7 +108,25 @@
    var socket = io();
 
 
+  function updateModal(item,next_bid) {
+  var modalBidContent = '<h4 class="text-center">Enter bid above ' + next_bid + '$: </h4>';
+  var modalCustomBidContent = '<h4 class="text-center">Enter custom bid above ' + next_bid + '$: </h4>';
+  var modalBidElem = document.querySelector('#Modal-BidConfirm-' + item.id);
+  var modalCustomBidElem = document.querySelector('#Modal-CustomBidConfirm-' + item.id);
+  modalBidElem.querySelector('.text-center').innerHTML = modalBidContent;
+  modalCustomBidElem.querySelector('.text-center').innerHTML = modalCustomBidContent;
+}
+
+function updateCustomModal(item,next_bid) {
+  var modalContent = '<h4 class="text-center">Enter custom bid above ' + next_bid + '$: </h4>';
+  var modalElem = document.querySelector('Modal-CustomBidConfirm-' + item.id);
+  modalElem.querySelector('.text-center').innerHTML = modalContent;
+}
+
+
    {% for item in items %}
+
+
 
    var updateItemsButton = document.querySelector('#update-items-button-{{ item.id }}');
    updateItemsButton.addEventListener('click', function() {
