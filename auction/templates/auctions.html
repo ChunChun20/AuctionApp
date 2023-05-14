@@ -1,10 +1,38 @@
 {% extends 'base.html' %}
+
+{% block head %}
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf-8">
+         var socket = io();
+         socket.on('connect', function() {
+          socket.emit('my event', {data: 'I\'m connected!'});
+    });
+        socket.on('updated_items', function(items) {
+  var tableBody = document.querySelector('#tasks-table tbody');
+  tableBody.innerHTML = '';
+  for (var i = 0; i < items.length; i++) {
+    var row = '<tr><td>' + items[i].name + '</td><td>' + items[i].start +
+              '</td><td>' + items[i].end + '</td><td>' + items[i].current_bid +
+              '$</td><td>' + items[i].bidder_id + '</td><td>' +
+              '<button class="btn btn-outline btn-success my-btn" data-toggle="modal" data-target="#Modal-BidConfirm-' + items[i].id + '">Bid now</button>' +
+              '<button class="btn btn-outline btn-danger my-btn" data-toggle="modal" data-target="#Modal-CustomBidConfirm-' + items[i].id + '">Place custom bid</button>' +
+              '<button class="btn btn-outline btn-info " data-toggle="modal" data-target="#Modal-MoreInfo-' + items[i].id + '">More Info</button>' +
+              '</td></tr>';
+    tableBody.innerHTML += row;
+  }
+
+
+});
+      </script>
+{% endblock %}
+
+
 {% block title %}
 Auctions
 {% endblock %}
 {% block content %}
 <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center">
-    <table class="table table-hover table-dark">
+    <table id="tasks-table" class="table table-hover table-dark">
         <thead class="table_head">
             <tr>
                 <!-- Your Columns HERE -->
@@ -17,7 +45,7 @@ Auctions
             </tr>
         </thead>
         <tbody>
-            <!-- Your rows inside the table HERE: -->
+
             {% for item in items %}
             {% include 'includes/items_modals.html' %}
                 <tr>
@@ -28,7 +56,7 @@ Auctions
                     <td>{{ item.current_bid }}$</td>
                     <td>{{ item.bidder_id }}</td>
                     <td>
-                        <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-BidConfirm-{{ item.id }}">Bid now</button>
+                        <button class="btn btn-outline btn-success" data-toggle="modal"  data-target="#Modal-BidConfirm-{{ item.id }}">Bid now</button>
                         <button class="btn btn-outline btn-danger" data-toggle="modal" data-target="#Modal-CustomBidConfirm-{{ item.id }}">Place custom bid</button>
                         <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo-{{ item.id }}">More Info</button>
                     </td>
@@ -37,5 +65,7 @@ Auctions
         </tbody>
     </table>
 </div>
+
+
 {% endblock %}
 

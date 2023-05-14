@@ -1,9 +1,9 @@
-from auction import db,login_manager
-from auction import bcrypt
+# from auction import db,login_manager
+
+# from auction import bcrypt
 from flask_login import UserMixin
 from datetime import datetime
-
-
+from auction.connection import db,login_manager,bcrypt
 
 
 @login_manager.user_loader
@@ -42,6 +42,7 @@ class User(db.Model,UserMixin):
     def __repr__(self):
         return f'{self.username}'
 
+
 class Item(db.Model):
     id = db.Column(db.Integer(),primary_key=True)
     name = db.Column(db.String(length=30),nullable=False,unique=True)
@@ -58,16 +59,24 @@ class Item(db.Model):
     def minimum_next_bid(self):
         return round(self.current_bid * self.step,2)
 
-
     def assign_owner(self):
         future_owner = User.query.filter_by(username=self.bidder_id).first()
         self.owner = future_owner
 
-
-
-
     def __repr__(self):
         return f'{self.name}'
 
-
-
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'start': self.start,
+            'end': self.end,
+            'current_bid': self.current_bid,
+            'step': self.step,
+            'seller_id' : self.seller_id,
+            'bidder_id': self.bidder_id,
+            'owner': self.owner,
+            'image': self.image
+        }

@@ -1,14 +1,18 @@
 import time
 
-from auction import app,db
+# from auction import app,db
+from auction import app
+from auction.connection import db
 from datetime import datetime,timedelta
-from flask import render_template,redirect,url_for,flash,request
+from flask import render_template, redirect, url_for, flash, request, jsonify
 from auction.models import Item,User
 from auction.forms import UserRegisterForm,ItemRegisterForm,LoginForm,BidForm,CustomBidForm
 from flask_login import login_user,logout_user,login_required,current_user
 from auction.funcs import check_auctions
 import threading
 import os
+
+
 
 @app.route('/')
 @app.route('/home')
@@ -144,6 +148,11 @@ def save_image(picture_file):
 def owned_items_page():
     owned_items = Item.query.filter_by(owner=current_user.id)
     return render_template('owned_items.html',owned_items=owned_items)
+
+
+
+
+
 
 thread = threading.Thread(target=check_auctions)
 thread.start()

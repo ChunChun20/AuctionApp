@@ -14,7 +14,7 @@
      tabindex="-1"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div style="background-color:#212121;" class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="ModalLabel">
           {{ item.name }}
@@ -22,7 +22,7 @@
       </div>
       <div class="modal-body">
         {{ item.description }}
-        <img src="static/images/{{ item.image }}" alt="">
+        <img style="width:100%;" src="static/images/{{ item.image }}" alt="">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary"
@@ -38,19 +38,21 @@
      tabindex="-1"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div style="background-color:#212121;" class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="ModalLabel">
+        <h5 class="modal-title" id="{{ item.id }}">
           <!-- -->
           {{ item.name }}
+          {{ item.current_bid }}
         </h5>
       </div>
       <div class="modal-body">
         <form method="POST">
             {{ bid_form.hidden_tag() }}
-          <h4 class="text-center">Are you sure you want to bid? Minimum next bid: {{ item.minimum_next_bid() }}$</h4>
+          <h4 class="text-center"> Minimum next bid is : {{ item.minimum_next_bid() }}$</h4>
             <input id="bid_item" name="bid_item" type="hidden" value="{{ item.name }}">
-          {{ bid_form.submit(class="btn btn-outline btn-success btn-block") }}
+          {{ bid_form.submit(id="update-items-button-" ~ item.id,class="btn btn-outline btn-success btn-block") }}
+
         </form>
       </div>
       <div class="modal-footer">
@@ -67,11 +69,12 @@
      tabindex="-1"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div style="background-color:#212121;" class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="ModalLabel">
           <!-- -->
           {{ item.name }}
+
         </h5>
       </div>
       <div class="modal-body">
@@ -82,7 +85,7 @@
 
           <br>
           <input id="custom_bid_item" name="custom_bid_item" type="hidden" value="{{ item.name }}">
-            {{ custom_bid_form.submit(class="btn btn-outline btn-danger btn-block") }}
+            {{ custom_bid_form.submit(id="update-custom-items-button-" ~ item.id,class="btn btn-outline btn-danger btn-block") }}
         </form>
       </div>
       <div class="modal-footer">
@@ -93,3 +96,33 @@
     </div>
   </div>
 </div>
+
+
+
+
+<script>
+
+
+
+
+   var socket = io();
+
+
+   {% for item in items %}
+
+   var updateItemsButton = document.querySelector('#update-items-button-{{ item.id }}');
+   updateItemsButton.addEventListener('click', function() {
+       console.log('update-items button clicked');
+       socket.emit('update_items');
+   });
+
+
+   var updateCustomItemsButton = document.querySelector('#update-custom-items-button-{{ item.id }}');
+   updateCustomItemsButton.addEventListener('click', function() {
+       console.log('update-custom-items button clicked');
+       socket.emit('update_items');
+   });
+
+    {% endfor %}
+</script>
+

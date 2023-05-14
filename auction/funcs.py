@@ -4,7 +4,9 @@ from datetime import datetime
 from flask import redirect, url_for
 
 from auction.models import Item,User
-from auction import db,app
+# from auction import db,app
+from auction import app
+from auction.connection import db
 
 # def check_auction(item_obj):
 #     today = date.today()
